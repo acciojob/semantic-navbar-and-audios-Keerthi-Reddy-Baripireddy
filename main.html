@@ -33,5 +33,27 @@
             Your browser does not support the audio element.
         </audio>
     </section>
+
+    <!-- Cypress Test Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cypress/8.3.0/cypress.min.js"></script>
+    <script>
+        describe("Test Audio Section", () => {
+            it("Verifies the audio section", () => {
+                cy.visit("http://localhost:3000"); // Replace with the actual URL of your page
+
+                // Wait for the audio elements to be present
+                cy.get('audio', { timeout: 10000 }).should($audios => {
+                    expect($audios).to.have.length(3);
+                    expect($audios).to.have.attr('controls');
+                    const srcs = $audios.map((i, el) => Cypress.$(el).attr('src'));
+                    expect(srcs.get()).to.deep.eq([
+                        'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3',
+                        'http://commondatastorage.googleapis.com/codeskulptor-assets/Epoq-Lepidoptera.ogg',
+                        'http://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3'
+                    ]);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
